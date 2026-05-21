@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kuis Interaktif Lingkungan - Sebab & Akibat</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Kuis interaktif berbasis sebab-akibat mengenai 4 pilar isu lingkungan kritis untuk meningkatkan kesadaran ekologis bumi.">
+  <meta name="author" content="Antigravity UI/UX Specialist">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Konfigurasi Tailwind Kustom
+    tailwind.config = {
+      theme: {
+        extend: {
+          backdropBlur: {
+            xs: '2px',
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Gaya Kustom (Animations, Glassmorphism, CSS Variables) -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="flex flex-col min-h-screen text-slate-100 antialiased selection:bg-emerald-500 selection:text-emerald-950">
+
+  <!-- BACKGROUND DEKORATIF ORGANIk (Efek Cahaya Hijau/Biru Halus di Pojok) -->
+  <div class="fixed -top-40 -left-40 w-96 height-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none z-0"></div>
+  <div class="fixed -bottom-40 -right-40 w-96 height-96 bg-teal-500/10 rounded-full blur-3xl pointer-events-none z-0"></div>
+
+  <!-- HEADER BAR UTAMA -->
+  <header class="relative z-15 w-full max-w-5xl mx-auto px-4 pt-6 pb-2 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <!-- Kiri: Brand & Home Button -->
+    <div class="flex items-center gap-6">
+      <!-- Brand / Title -->
+      <a href="#" onclick="window.location.reload(); return false;" class="flex items-center gap-3 group text-white">
+        <div class="w-10 h-10 bg-emerald-500/20 text-emerald-400 rounded-xl flex items-center justify-center border border-emerald-500/30 group-hover:scale-105 transition-all">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
+          </svg>
+        </div>
+        <div>
+          <h1 class="text-lg font-bold tracking-tight text-white leading-none">EcoConsequence</h1>
+          <span class="text-[10px] text-emerald-400/80 font-bold uppercase tracking-widest">Kuis Sebab & Akibat</span>
+        </div>
+      </a>
+
+      <!-- Home Icon Button -->
+      <a href="https://little-gift-for-u.my.canva.site/pahlawan-bumi" class="flex items-center gap-2 px-3 py-2 bg-white/10 hover:bg-emerald-500/20 text-white hover:text-emerald-300 rounded-xl border border-white/20 hover:border-emerald-500/30 transition-all shadow-md group" title="Menuju Web Canva Pahlawan Bumi">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+        </svg>
+        <span class="text-sm font-bold hidden sm:inline-block">Home</span>
+      </a>
+    </div>
+
+    <!-- ==========================================
+         PANEL KONTROL AUDIO (FLOATING WIDGET)
+         Melayani On/Off backsound ambient & SFX
+         ========================================== -->
+    <div class="glass-card px-4 py-2 flex items-center gap-3 border border-white/10 shadow-md">
+      <!-- Equalizer Visualizer Mini -->
+      <div id="eq-container" class="flex items-end h-5 w-7 justify-center transition-all duration-300">
+        <!-- Default bulatan mati, akan dirender dinamis via app.js -->
+        <span class="w-1.5 h-1.5 bg-red-400 rounded-full"></span>
+      </div>
+
+      <!-- Pemisah vertikal -->
+      <div class="w-px h-5 bg-white/10"></div>
+
+      <!-- Tombol Toggle Musik -->
+      <button 
+        id="toggle-music" 
+        class="flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold border transition-all duration-300 bg-emerald-500/20 text-emerald-300 border-emerald-500/30 hover:bg-emerald-500/30"
+        title="Nyalakan/Matikan Musik Latar Ambient"
+      >
+        <span>🎵 Musik:</span>
+        <span class="music-status text-emerald-400 font-bold">ON</span>
+      </button>
+
+      <!-- Tombol Toggle SFX -->
+      <button 
+        id="toggle-sfx" 
+        class="flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold border transition-all duration-300 bg-emerald-500/20 text-emerald-300 border-emerald-500/30 hover:bg-emerald-500/30"
+        title="Nyalakan/Matikan Efek Suara Tombol"
+      >
+        <span>🔊 SFX:</span>
+        <span class="sfx-status text-emerald-400 font-bold">ON</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- KONTEN UTAMA DARI RENDERING ENGINE JAVASCRIPT -->
+  <main class="flex-grow flex items-center justify-center relative z-10">
+    <div id="app-container" class="w-full max-w-5xl mx-auto px-4 py-8">
+      <!-- Loading State default sebelum script bekerja -->
+      <div class="glass-card p-12 text-center max-w-md mx-auto ring-1 ring-emerald-500/20">
+        <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-emerald-500 mx-auto mb-4"></div>
+        <p class="text-sm text-emerald-300/80 font-semibold tracking-wider">Menyiapkan Pengalaman Kuis Interaktif...</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="relative z-10 py-6 border-t border-white/5 bg-black/10 backdrop-blur-xs text-center text-xs text-slate-500 px-4">
+    <div class="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+      <p>✨ <span class="text-emerald-400 font-semibold">Berhasil Dimuat:</span> Seluruh gambar kuis dari folder kustom <code class="bg-white/5 text-emerald-300 px-1 py-0.5 rounded font-mono">Aprojek1</code> telah terintegrasi sempurna!</p>
+      <p class="mt-1 sm:mt-0">&copy; 2026 EcoConsequence Kuis Interaktif. Crafted for Earth.</p>
+    </div>
+  </footer>
+
+  <!-- DOM & Audio Engine JavaScript Link -->
+  <script src="app.js" defer></script>
+</body>
+</html>
